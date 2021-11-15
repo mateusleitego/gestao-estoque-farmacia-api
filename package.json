@@ -28,7 +28,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "develop": "ts-node-dev --respawn --transpile-only --inspect --ignore-watch node_modules --watch 'src/**' src/server.ts"
   }
 }
