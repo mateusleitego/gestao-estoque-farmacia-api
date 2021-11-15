@@ -2,6 +2,7 @@ import 'dotenv/config';
 import 'express-async-errors';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 
 import fileDocumentation from './config/documentation.json';
 import { ensureErrorHandling } from './middlewares/ensureErrorHandling';
@@ -11,6 +12,7 @@ import { routes } from './routes';
 const server = express();
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
+server.use(cors());
 
 server.use(routes);
 server.use(

@@ -222,11 +222,276 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Usuário excluído com sucesso!"
           },
           "400": {
             "description": "Usuário não existente"
+          }
+        }
+      }
+    },
+    "/medicines": {
+      "post": {
+        "tags": ["Medicamento"],
+        "summary": "Criar um medicamento",
+        "description": "Realiza o cadastro de um novo medicamento na aplicação",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "categoria": {
+                    "type": "string"
+                  },
+                  "preco": {
+                    "type": "string"
+                  },
+                  "validade": {
+                    "type": "object",
+                    "properties": {
+                      "dia": {
+                        "type": "number"
+                      },
+                      "mes": {
+                        "type": "number"
+                      },
+                      "ano": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "nome": "Dipirona",
+                  "descricao": "Medicamento revolucionário que um dia vai curar ate o cancer",
+                  "categoria": "Liquido",
+                  "preco": 2.99,
+                  "validade": {
+                    "dia": 1,
+                    "mes": 2,
+                    "ano": 2022
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Medicamento criado com sucesso!"
+          },
+          "400": {
+            "description": "Medicamento ja existente"
+          },
+          "401": {
+            "description": "Token não invalido"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Medicamento"],
+        "summary": "Buscar por um medicamento pelo nome",
+        "description": "Realiza uma busca por um medicamento específico",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "nome",
+            "required": true,
+            "allowReserved": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Medicamento encontrado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "nome": {
+                      "type": "string"
+                    },
+                    "descricao": {
+                      "type": "string"
+                    },
+                    "categoria": {
+                      "type": "string"
+                    },
+                    "validade": {
+                      "dia": 1,
+                      "mes": 2,
+                      "ano": 2022
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Medicamento ja existente"
+          },
+          "401": {
+            "description": "Token não invalido"
+          }
+        }
+      }
+    },
+    "/medicines/all": {
+      "get": {
+        "tags": ["Medicamento"],
+        "summary": "Buscar por um medicamentos",
+        "description": "Realiza uma busca por vários medicamentos",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Medicamento encontrado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": [
+                    {
+                      "id": {
+                        "type": "string"
+                      },
+                      "nome": {
+                        "type": "string"
+                      },
+                      "descricao": {
+                        "type": "string"
+                      },
+                      "categoria": {
+                        "type": "string"
+                      },
+                      "validade": {
+                        "dia": 1,
+                        "mes": 2,
+                        "ano": 2022
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token não invalido"
+          }
+        }
+      }
+    },
+    "/medicines/{medicine_id}": {
+      "put": {
+        "tags": ["Medicamento"],
+        "summary": "Atualiza um medicamento",
+        "description": "Realiza a atualização de um medicamento ja existente na aplicação",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "medicine_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "type": "string"
+                  },
+                  "descricao": {
+                    "type": "string"
+                  },
+                  "categoria": {
+                    "type": "string"
+                  },
+                  "preco": {
+                    "type": "number"
+                  }
+                },
+                "example": {
+                  "nome": "Sorrizal",
+                  "descricao": "Medicamento diferenciado",
+                  "categoria": "Cura Tudo",
+                  "preco": 1.99
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Medicamento atualizado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nome": {
+                      "type": "string"
+                    },
+                    "descricao": {
+                      "type": "string"
+                    },
+                    "categoria": {
+                      "type": "string"
+                    },
+                    "preco": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Medicamento não existente"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Medicamento"],
+        "summary": "Excluir um medicamento",
+        "description": "Realiza a exclusão de um medicamento ja existente na aplicação",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "medicine_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Medicamento excluído com sucesso!"
+          },
+          "400": {
+            "description": "Medicamento não existente"
           }
         }
       }
