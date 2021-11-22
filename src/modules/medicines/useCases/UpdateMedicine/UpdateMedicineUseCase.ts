@@ -18,13 +18,6 @@ export class UpdateMedicineUseCase {
         throw new AppError('Medicamento não existente');
       }
 
-      const medicineNameAlreadyExists =
-        await this.medicinesRepository.findByName(nome);
-
-      if (medicineNameAlreadyExists) {
-        throw new AppError('Nome de medicamento ja existente');
-      }
-
       await this.medicinesRepository.update(data);
 
       const medicine = await this.medicinesRepository.findById(_id);
